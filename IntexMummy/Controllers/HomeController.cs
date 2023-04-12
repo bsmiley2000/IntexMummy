@@ -47,6 +47,15 @@ namespace IntexMummy.Controllers
 
             return View(viewModel);
         }
+        [HttpGet]
+        public IActionResult SingleBurial(int id)
+        {
+            ViewBag.Id = id;
+            ViewBag.Message = "Hello, world!";
+            return View();
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

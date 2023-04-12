@@ -3,7 +3,11 @@
 @{
     ViewData["Title"] = "View";
 }
-
+<style>
+    .card:hover {
+        background-color: pink;
+    }
+</style>
 <h1>Burials</h1>
 
 <p>
@@ -45,6 +49,10 @@
             <div class="col">Depth: @b.Depth</div>
             <div class="col">Head Direction: @b.Headdirection</div>
             <div class="col">Has Textiles?: </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" page-action="SingleBurial" page-id="@b.Id">View More</button>
+            </div>
+
         </div>
     </div>
 }
@@ -53,5 +61,3 @@
      page-class-selected="btn-primary" class="btn-group pull-right m-1">
     Hello
 </div>
-
-
