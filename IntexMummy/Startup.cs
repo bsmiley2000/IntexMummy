@@ -33,7 +33,7 @@ namespace IntexMummy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+/*
             //for better passwords
             services.Configure<IdentityOptions>(options =>
             {
@@ -45,7 +45,7 @@ namespace IntexMummy
                 options.Password.RequiredLength = 13;
                 options.Password.RequiredUniqueChars = 5;
             });
-
+*/
 
             /*services.AddDbContext<fagelgamousContext>(options =>
 
@@ -70,14 +70,14 @@ namespace IntexMummy
             
             
 
-            services.Configure<CookiePolicyOptions>(options =>
+/*            services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential 
                 // cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 // requires using Microsoft.AspNetCore.Http;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            });*/
 
             services.AddControllersWithViews();
             services.AddRazorPages();
