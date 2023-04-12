@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace IntexMummy
@@ -25,6 +26,7 @@ namespace IntexMummy
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -36,7 +38,7 @@ namespace IntexMummy
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
+                options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 13;
                 options.Password.RequiredUniqueChars = 5;
             });
