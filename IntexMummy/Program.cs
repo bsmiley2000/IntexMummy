@@ -22,5 +22,6 @@ namespace IntexMummy
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }

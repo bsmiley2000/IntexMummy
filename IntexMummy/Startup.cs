@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntexMummy.Models;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+
+
 namespace IntexMummy
 {
     public class Startup
@@ -27,17 +30,30 @@ namespace IntexMummy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*            services.AddDbContext<fagelgamousContext>(options =>
+
+                            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                        services.AddDbContext<ApplicationDbContext>(options =>
+
+                            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+                        */
+
+            //connection for data and auth
+            var conectionString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<fagelgamousContext>(options =>
+                options.UseNpgsql(conectionString));
 
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            var authConnectString = Configuration.GetConnectionString("AuthLink");
             services.AddDbContext<ApplicationDbContext>(options =>
-
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(authConnectString));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                        .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
