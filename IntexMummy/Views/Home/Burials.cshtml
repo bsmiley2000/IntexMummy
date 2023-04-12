@@ -1,0 +1,63 @@
+﻿@model BurialMainViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+<style>
+    .card:hover {
+        background-color: pink;
+    }
+</style>
+<h1>Burials</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form method="get" action="@Url.Action("Index")">
+    <div class="form-group row">
+        <div class="col-md-2">
+            <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" />
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="sexSearchString" placeholder="Search by sex" class="form-control" value="@ViewData["sexFilter"]" />
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="depthSearchString" placeholder="Search by depth" class="form-control" value="@ViewData["depthFilter"]" />
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="headDirectionSearchString" placeholder="Search by head direction" class="form-control" value="@ViewData["headDirectionFilter"]" />
+        </div>
+        <div class="col-md-2">
+            <select name="hasTextilesSearchString" class="form-control">
+                <option value="">--Has Textiles?--</option>
+                <option value="True" >Yes</option>
+                <option value="False">No</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+@foreach (Burialmain b in Model.Burialmain)
+{
+    <div class="card">
+        <div class="row">
+            <div class="col">Id: @b.Id</div>
+            <div class="col">Sex: @b.Sex</div>
+            <div class="col">Depth: @b.Depth</div>
+            <div class="col">Head Direction: @b.Headdirection</div>
+            <div class="col">Has Textiles?: </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" page-action="SingleBurial" page-id="@b.Id">View More</button>
+            </div>
+
+        </div>
+    </div>
+}
+<div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
+    Hello
+</div>

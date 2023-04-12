@@ -1,5 +1,4 @@
 ﻿using IntexMummy.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,10 +12,12 @@ namespace IntexMummy.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private fagelgamousContext context { get; set; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, fagelgamousContext temp)
         {
             _logger = logger;
+            context = temp;
         }
 
         public IActionResult Index()
@@ -28,6 +29,32 @@ namespace IntexMummy.Controllers
         {
             return View();
         }
+
+        public IActionResult Burials(int pageNum = 1)
+        {
+            int pageSize = 10;
+            var burials = context.Burialmain.Skip((pageNum - 1) * pageSize).Take(pageSize);
+            var pageInfo = new PageInfo
+            {
+                TotalNumBurials = context.Burialmain.Count(),
+                BurialsPerPage = pageSize,
+                CurrentPage = pageNum
+
+
+            };
+            var viewModel = new BurialMainViewModel { Burialmain = burials, PageInfo = pageInfo };
+
+            return View(viewModel);
+        }
+        [HttpGet]
+        public IActionResult SingleBurial(int id)
+        {
+            ViewBag.Id = id;
+            ViewBag.Message = "Hello, world!";
+            return View();
+        }
+
+
 
         [Authorize]
         public IActionResult AdminData()

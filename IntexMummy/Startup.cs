@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
-
+using IntexMummy.Models;
 namespace IntexMummy
 {
     public class Startup
@@ -44,9 +44,13 @@ namespace IntexMummy
             });
 
 
+            services.AddDbContext<fagelgamousContext>(options =>
+
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             /*services.AddControllersWithViews();*/
