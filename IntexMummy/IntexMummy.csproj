@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,6 +11,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.31" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.31" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.31" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".ebextensions\00_install_certbot.config" />
+    <None Include=".ebextensions\01_open_https_port.config" />
+    <None Include=".ebextensions\02_grant_executable_rights.config" />
+    <None Include=".ebextensions\03_renew_ssl_certificate_cron_job.config" />
+    <None Include=".platform\hooks\postdeploy\00_get_certificate.sh" />
   </ItemGroup>
 
 </Project>
