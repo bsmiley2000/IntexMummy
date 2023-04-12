@@ -47,14 +47,14 @@ namespace IntexMummy
             });
 
 
-            services.AddDbContext<fagelgamousContext>(options =>
+            /*services.AddDbContext<fagelgamousContext>(options =>
 
                             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
                         services.AddDbContext<ApplicationDbContext>(options =>
 
-                            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));*/
 
-                        */
+                        
 
             //connection for data and auth
             var conectionString = Configuration["ConnectionStrings:DefaultConnection"];
@@ -67,7 +67,7 @@ namespace IntexMummy
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            /*services.AddControllersWithViews();*/
+            
             
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -79,7 +79,7 @@ namespace IntexMummy
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddControllersWithViews();
             services.AddRazorPages();
 
         }
