@@ -28,12 +28,26 @@ namespace IntexMummy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //for better passwords
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 13;
+                options.Password.RequiredUniqueChars = 5;
+            });
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
+            /*services.AddControllersWithViews();*/
             
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -44,6 +58,8 @@ namespace IntexMummy
                 // requires using Microsoft.AspNetCore.Http;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+
             services.AddRazorPages();
 
         }
@@ -76,7 +92,7 @@ namespace IntexMummy
             app.Use(async (context, next) =>
             {
                 //may need to add more website links or image links
-                context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src 'self'; img-src 'self'; frame-src 'self'");
+                context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src 'self'; img-src 'self' https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F7d3dfd74-27d4-11e9-92e2-27eb1cf1c11f.jpg?crop=4675%2C2630%2C33%2C485&resize=1180; frame-src 'self'");
                 await next();
             });
 

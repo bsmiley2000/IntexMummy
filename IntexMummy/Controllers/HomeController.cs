@@ -35,6 +35,16 @@ namespace IntexMummy.Controllers
             return View();
         }
 
+        public IActionResult Unsupervised()
+        {
+            return View();
+        }
+
+        public IActionResult Supervised()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
