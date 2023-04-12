@@ -1,8 +1,34 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<head>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
+</head>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">Welcome To Mummify</div>
+        <div class="masthead-heading text-uppercase">It's Time to Get Digging!</div>
+        <a class="btn btn-primary btn-xl text-uppercase" asp-controller="Home" asp-action="Privacy">Show the Data</a>
+    </div>
+</header>
+
+
+<!-- Page section example for content below the video header -->
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <p>Fag el-Gamous (which means Way of the Water Buffalo) is a large and important cemetery in Egypt that has been under archeological investigation (primarily by BYU researchers) for over <code>25 years.</code> </p>
+                <p>
+                    During multiple years of study, researchers have excavated more than <code>1,000 mummies</code> and collected data in field notes, spreadsheets, and simple databases about each mummy’s location, physical orientation in the ground, burial depth, hair color, wrapping
+                    (including information about the textiles used), sex, age, bone (including skull and teeth) dimensions, items accompanying the mummy, and more. Offsite, researchers have performed a variety of analyses on the excavated items including carbon dating, DNA sequencing, and others.</p>
+                <p>In this website you will be able to visually see the data you add in action through <code>visualizations</code>. This site also allows the research team to view, filter, and query this <code>data</code> in many ways. This will allow researchers to answer a variety of academic research questions.</p>
+                <p class="mb-0">
+                    <a asp-controller="Home" asp-action="Privacy">Click here to view the burial informtation</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

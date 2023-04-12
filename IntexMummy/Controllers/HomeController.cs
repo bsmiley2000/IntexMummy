@@ -1,5 +1,4 @@
 ﻿using IntexMummy.Models;
-using IntexMummy.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using IntexMummy.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntexMummy.Controllers
 {
@@ -56,6 +57,22 @@ namespace IntexMummy.Controllers
         }
 
 
+
+        [Authorize]
+        public IActionResult AdminData()
+        {
+            return View();
+        }
+
+        public IActionResult Unsupervised()
+        {
+            return View();
+        }
+
+        public IActionResult Supervised()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
