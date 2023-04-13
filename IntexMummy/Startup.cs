@@ -24,19 +24,20 @@ namespace IntexMummy
 {
     public class Startup
     {
+        private readonly IWebHostEnvironment _env;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            _env = environment;
         }
 
         public IConfiguration Configuration { get; }
-
+        public IWebHostEnvironment Environment => _env;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             //line below is for Supervised Learning Model experimentation
             services.AddSwaggerGen(c =>
             {
@@ -45,8 +46,11 @@ namespace IntexMummy
             //line below is for Supervised Learning Model
             //added this below
             services.AddSingleton<InferenceSession>(
-                new InferenceSession(Path.Combine( "MLModel/model.onnx"))
+                new InferenceSession(
+                    Path.Combine(_env.ContentRootPath, "MLModel/model.onnx")
+                )
             );
+
 
 
             //connection for data and auth
