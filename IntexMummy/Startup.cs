@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using IntexMummy.Models;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.ML.OnnxRuntime;
-
+using Microsoft.OpenApi.Models;
 
 namespace IntexMummy
 {
@@ -57,7 +57,10 @@ namespace IntexMummy
 
 
             //line below is for Supervised Learning Model experimentation
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
             //line below is for Supervised Learning Model
             //added this below
             services.AddSingleton<InferenceSession>(
@@ -101,7 +104,10 @@ namespace IntexMummy
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
             }
             else
             {
