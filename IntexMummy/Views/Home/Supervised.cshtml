@@ -1,10 +1,112 @@
 ﻿@{
-    ViewData["Title"] = "Supervised";
+    ViewData["Title"] = "Supervised Analysis";
 }
-<h1>@ViewData["Title"]</h1>
+<h1 class="mt-1 mb-5">@ViewData["Title"]</h1>
 
-<h3>Supervised Analysis:</h3>
-<p>A page that allows the user to enter osteology and/or burial information to predict (based on your trained model) the sex of the burial </p>
+
+
+<h5>Insert your desired parameters below to see as to which head direction a mummy may have. The model has an accuracy score of 76%. </h5>
+<hr />
+
+<div class="container">
+    <h6>Assumptions: </h6>
+    <ul>
+        <li>The entire burial site is divided up into squares(cartesian plot)</li>
+        <li>Each 'square' is 5 x 5 meters</li>
+        <li>Each '[direction]to Head' or '[direction]to Feet' is the distance from the mummy to that [direction] side of the five meter square.</li>
+        <li>'Square North-South' and 'Square East-West' is the number of meters from the dig site origin</li>
+    </ul>
+</div>
+
+<hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <form id="predictionForm">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="squareNorthSouth">Square North-South:</label>
+                    <input type="number" step="0.01" id="squareNorthSouth" placeholder="e.g. 150 m" name="squareNorthSouth" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="depth">Depth:</label>
+                    <input type="number" step="0.01" id="depth" placeholder="e.g. 1.5 m" name="depth" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="southToHead">South to Head:</label>
+                    <input type="number" step="0.01" id="southToHead" placeholder="e.g. 1.65 m" name="southToHead" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="squareEastWest">Square East-West:</label>
+                    <input type="number" step="0.01" id="squareEastWest" placeholder="e.g. 20 m" name="squareEastWest" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="westToHead">West to Head:</label>
+                    <input type="number" step="0.01" id="westToHead" placeholder="e.g. 2.5 m" name="westToHead" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="length">Length:</label>
+                    <input type="number" step="0.01" id="length" placeholder="e.g. 0.45 m" name="length" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="westToFeet">West to Feet:</label>
+                    <input type="number" step="0.01" id="westToFeet" placeholder="e.g. 1.17 m" name="westToFeet" class="form-control" />
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="southToFeet">South to Feet:</label>
+                    <input type="number" step="0.01" id="southToFeet" placeholder="e.g. 2.27 m" name="southToFeet" class="form-control" />
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="mt-1 bg-light p-3">
+                <h4>Predicted Head Direction:
+                    <p class="display-4 text-primary" id="predictionResult"></p>
+                </h4>
+                
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            function submitForm() {
+                var data = {
+                    squareNorthSouth: parseFloat(document.getElementById("squareNorthSouth").value),
+                    depth: parseFloat(document.getElementById("depth").value),
+                    southToHead: parseFloat(document.getElementById("southToHead").value),
+                    squareEastWest: parseFloat(document.getElementById("squareEastWest").value),
+                    westToHead: parseFloat(document.getElementById("westToHead").value),
+                    length: parseFloat(document.getElementById("length").value),
+                    westToFeet: parseFloat(document.getElementById("westToFeet").value),
+                    southToFeet: parseFloat(document.getElementById("southToFeet").value)
+                };
+
+                fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        document.getElementById("predictionResult").innerHTML = result.predictedValue;
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        </script>
+    }
 
 
 
