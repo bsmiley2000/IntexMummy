@@ -38,12 +38,14 @@ namespace IntexMummy.Controllers
 
         public IActionResult Burials(int pageNum = 1, long idSearchString = 5, string GenderSearchString = null, string PreservationSearchString = null, string HeadDirectionSearchString = null)
         {
+            
+
             int pageSize = 10;
             long id = idSearchString;
             string gender = GenderSearchString;
             string preservation = PreservationSearchString;
             string headdirection = HeadDirectionSearchString;
-            
+            string searchParams = "";
             var burialsQuery = context.Burialmain.AsQueryable();
             if (id != 5)
             {
@@ -72,11 +74,12 @@ namespace IntexMummy.Controllers
             {
                 TotalNumBurials = burialsQuery.Count(),
                 BurialsPerPage = pageSize,
-                CurrentPage = pageNum
-               
-               
-
-
+                CurrentPage = pageNum,
+                GenderSearchString = gender,
+                idSearchString = id,
+                HeadDirectionSearchString = headdirection,
+                PreservationSearchString = preservation
+                
 
             };
             
