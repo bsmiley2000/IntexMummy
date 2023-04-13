@@ -40,7 +40,11 @@ namespace IntexMummy.Infrastructure
 
             int startPage = 1;
             int endPage = PageBlah.TotalPages;
-
+            string gender = PageBlah.GenderSearchString;
+            long id = PageBlah.idSearchString;
+            string preservation = PageBlah.PreservationSearchString;
+            string headdirection = PageBlah.HeadDirectionSearchString;
+            string age = PageBlah.AgeSearchString;
             if (PageBlah.TotalPages > 5)
             {
                 if (PageBlah.CurrentPage <= 3)
@@ -62,7 +66,7 @@ namespace IntexMummy.Infrastructure
                 
                 
                 TagBuilder next = new TagBuilder("a");
-                next.Attributes["href"] = uh.Action(PageAction, new { pageNum = PageBlah.CurrentPage - 1 });
+                next.Attributes["href"] = uh.Action(PageAction, new { idSearchString = id, GenderSearchString = gender, PreservationSearchString = preservation, HeadDirectionSearchString = headdirection, AgeSearchString = age, pageNum = PageBlah.CurrentPage - 1 });
                 next.InnerHtml.Append("<   ");
 
                 final.InnerHtml.AppendHtml(next);
@@ -70,13 +74,9 @@ namespace IntexMummy.Infrastructure
             
             for (int i = startPage; i <= endPage; i++)
             {
-                string gender = PageBlah.GenderSearchString;
-                long id = PageBlah.idSearchString;
-                string preservation = PageBlah.PreservationSearchString;
-                string headdirection = PageBlah.HeadDirectionSearchString;
-
+                
                 TagBuilder tb = new TagBuilder("a");
-                tb.Attributes["href"] = uh.Action(PageAction, new {idSearchString = id, GenderSearchString = gender, PreservationSearchString = preservation, HeadDirectionSearchString = headdirection, pageNum = i }); 
+                tb.Attributes["href"] = uh.Action(PageAction, new {idSearchString = id, GenderSearchString = gender, PreservationSearchString = preservation, HeadDirectionSearchString = headdirection, AgeSearchString = age, pageNum = i }); 
                 
                 if (PageClassesEnabled)
                 {
@@ -95,8 +95,9 @@ namespace IntexMummy.Infrastructure
             if (PageBlah.CurrentPage < PageBlah.TotalPages)
             {
                 TagBuilder next = new TagBuilder("a");
-                next.Attributes["href"] = uh.Action(PageAction, new { pageNum = PageBlah.CurrentPage + 1 });
+                next.Attributes["href"] = uh.Action(PageAction, new { idSearchString = id, GenderSearchString = gender, PreservationSearchString = preservation, HeadDirectionSearchString = headdirection, AgeSearchString = age, pageNum = PageBlah.CurrentPage + 1 });
                 next.InnerHtml.Append(">");
+                 // add a class to the anchor tag
 
                 final.InnerHtml.AppendHtml(next);
             }

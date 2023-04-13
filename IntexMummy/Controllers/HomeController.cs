@@ -36,7 +36,7 @@ namespace IntexMummy.Controllers
             return View();
         }
 
-        public IActionResult Burials(int pageNum = 1, long idSearchString = 5, string GenderSearchString = null, string PreservationSearchString = null, string HeadDirectionSearchString = null)
+        public IActionResult Burials(int pageNum = 1, long idSearchString = 0, string GenderSearchString = null, string PreservationSearchString = null, string HeadDirectionSearchString = null, string AgeSearchString = null, string ColorSearchString = null)
         {
             
 
@@ -45,9 +45,11 @@ namespace IntexMummy.Controllers
             string gender = GenderSearchString;
             string preservation = PreservationSearchString;
             string headdirection = HeadDirectionSearchString;
-            string searchParams = "";
+            string age = AgeSearchString;
+            string color = ColorSearchString;
+   
             var burialsQuery = context.Burialmain.AsQueryable();
-            if (id != 5)
+            if (id != 0)
             {
                 burialsQuery = burialsQuery.Where(p => p.Id == id);
                 
@@ -59,13 +61,21 @@ namespace IntexMummy.Controllers
             }
             if (preservation != null)
             {
-                burialsQuery = burialsQuery.Where(p => p.Preservation == preservation);
+                burialsQuery = burialsQuery.Where(p => p.Preservation.Contains(preservation));
                 
             }
             if (headdirection != null)
             {
                 burialsQuery = burialsQuery.Where(p => p.Headdirection == headdirection);
                 
+            }
+            if (age != null)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Ageatdeath == age);
+            }
+            if (color != null)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Headdirection == "YOURMOM!!");
             }
 
             var burials = burialsQuery.Skip((pageNum - 1) * pageSize).Take(pageSize);
@@ -78,7 +88,8 @@ namespace IntexMummy.Controllers
                 GenderSearchString = gender,
                 idSearchString = id,
                 HeadDirectionSearchString = headdirection,
-                PreservationSearchString = preservation
+                PreservationSearchString = preservation,
+                AgeSearchString = age
                 
 
             };
