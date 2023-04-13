@@ -34,27 +34,6 @@ namespace IntexMummy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            /*
-                        //for better passwords
-                        services.Configure<IdentityOptions>(options =>
-                        {
-                            // Default Password settings.
-                            options.Password.RequireDigit = true;
-                            options.Password.RequireLowercase = false;
-                            options.Password.RequireNonAlphanumeric = true;
-                            options.Password.RequireUppercase = false;
-                            options.Password.RequiredLength = 13;
-                            options.Password.RequiredUniqueChars = 5;
-                        });
-            */
-
-            /*services.AddDbContext<fagelgamousContext>(options =>
-
-                            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-                        services.AddDbContext<ApplicationDbContext>(options =>
-
-                            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));*/
-
 
             //line below is for Supervised Learning Model experimentation
             services.AddSwaggerGen(c =>
@@ -79,19 +58,9 @@ namespace IntexMummy
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
-            
-
-/*            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential 
-                // cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                // requires using Microsoft.AspNetCore.Http;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });*/
 
             services.AddControllersWithViews();
+
             services.AddRazorPages();
 
         }

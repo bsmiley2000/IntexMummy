@@ -1,17 +1,17 @@
-﻿@using Microsoft.AspNetCore.Hosting
-@inject IWebHostEnvironment HostingEnvironment
-
-@{
+﻿@{
     ViewData["Title"] = "Unsupervised";
-    string htmlFilePath = "~/fig.html";
-    string htmlContent = System.IO.File.ReadAllText(htmlFilePath);
 }
 <h1>@ViewData["Title"]</h1>
 
 <h3>Results of Our Unsupervised Analysis:</h3>
-<p>Explain what the results mean here</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 <br />
-<div>
-    @Html.Raw(htmlContent)
+<br />
+
+<div fluid>
+    <iframe src="/fig.html" width="1000" height="500"></iframe>
 </div>

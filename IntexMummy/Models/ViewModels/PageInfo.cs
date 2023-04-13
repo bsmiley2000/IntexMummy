@@ -10,6 +10,8 @@ namespace IntexMummy.Models.ViewModels
         public int TotalNumBurials { get; set; }
         public int BurialsPerPage { get; set; }
         public int CurrentPage { get; set; }
+        public string CurrentSlug { get; set; }
         public int TotalPages => (int)Math.Ceiling((double)TotalNumBurials / BurialsPerPage);
+        
     }
 }

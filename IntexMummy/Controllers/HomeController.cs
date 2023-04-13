@@ -36,26 +36,133 @@ namespace IntexMummy.Controllers
             return View();
         }
 
-        public IActionResult Burials(int pageNum = 1)
+        public IActionResult Burials(int pageNum = 1, long idSearchString = 5, string GenderSearchString = null, string PreservationSearchString = null, string HeadDirectionSearchString = null)
         {
             int pageSize = 10;
-            var burials = context.Burialmain.Skip((pageNum - 1) * pageSize).Take(pageSize);
+            long id = idSearchString;
+            string gender = GenderSearchString;
+            string preservation = PreservationSearchString;
+            string headdirection = HeadDirectionSearchString;
+            
+            var burialsQuery = context.Burialmain.AsQueryable();
+            if (id != 5)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Id == id);
+                
+            }
+            if (gender != null)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Sex == gender);
+                
+            }
+            if (preservation != null)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Preservation == preservation);
+                
+            }
+            if (headdirection != null)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Headdirection == headdirection);
+                
+            }
+
+            var burials = burialsQuery.Skip((pageNum - 1) * pageSize).Take(pageSize);
+
             var pageInfo = new PageInfo
             {
-                TotalNumBurials = context.Burialmain.Count(),
+                TotalNumBurials = burialsQuery.Count(),
                 BurialsPerPage = pageSize,
                 CurrentPage = pageNum
+               
+               
+
 
 
             };
+            
             var viewModel = new BurialMainViewModel { Burialmain = burials, PageInfo = pageInfo };
 
             return View(viewModel);
         }
-        [HttpGet]
-        public IActionResult SingleBurial(int id)
+        
+        public IActionResult SingleBurial(long id = 0)
         {
-            ViewBag.Id = id;
+            Burialmain singleBurial = context.Burialmain.Where(p => p.Id == id).First();
+            try
+            {
+                BurialmainTextile bmt = context.BurialmainTextile.Where(p => p.MainBurialmainid == singleBurial.Id).First();
+                Textile textile = context.Textile.Where(p => p.Id == bmt.MainTextileid).First();
+                ViewBag.TId = textile.Id;
+                ViewBag.TextileId = textile.Textileid;
+                ViewBag.Locale = textile.Locale;
+                ViewBag.Description = textile.Description;
+                ViewBag.BurialNumber = textile.Burialnumber;
+                ViewBag.EstimatedPeriod = textile.Estimatedperiod;
+                ViewBag.SampleDate = textile.Sampledate;
+                ViewBag.PhotographedDate = textile.Photographeddate;
+                ViewBag.Direction = textile.Direction;
+                ViewBag.HasTextiles = true;
+                // continue with the code
+                try
+                {
+                    ColorTextile ct = context.ColorTextile.Where(p => p.MainTextileid == textile.Id).First();
+                    Color color = context.Color.Where(p => p.Id == ct.MainColorid).First();
+
+
+                    ViewBag.Color = color.Value;
+                    ViewBag.HasColor = true;
+                }
+                catch
+                {
+                    ViewBag.HasColor = false;
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                ViewBag.HasTextiles = false;
+            }
+            
+            //Viewbags for singleburial
+            ViewBag.Id = singleBurial.Id;
+            ViewBag.SquareNorthSouth = singleBurial.Squarenorthsouth;
+            ViewBag.HeadDirection = singleBurial.Headdirection;
+            ViewBag.Sex = singleBurial.Sex;
+            ViewBag.NorthSouth = singleBurial.Northsouth;
+            ViewBag.Depth = singleBurial.Depth;
+            ViewBag.EastWest = singleBurial.Eastwest;
+            ViewBag.AdultSubAdult = singleBurial.Adultsubadult;
+            ViewBag.FaceBundles = singleBurial.Facebundles;
+            ViewBag.SouthToHead = singleBurial.Southtohead;
+            ViewBag.Preservation = singleBurial.Preservation;
+            ViewBag.FieldBookPage = singleBurial.Fieldbookpage;
+            ViewBag.SquareEastWest = singleBurial.Squareeastwest;
+            ViewBag.Goods = singleBurial.Goods;
+            ViewBag.Text = singleBurial.Text;
+            ViewBag.Wrapping = singleBurial.Wrapping;
+            ViewBag.HairColor = singleBurial.Haircolor;
+            ViewBag.WestToHead = singleBurial.Westtohead;
+            ViewBag.SamplesCollected = singleBurial.Samplescollected;
+            ViewBag.Area = singleBurial.Area;
+            ViewBag.BurialId = singleBurial.Burialid;
+            ViewBag.Length = singleBurial.Length;
+            ViewBag.BurialNumber = singleBurial.Burialnumber;
+            ViewBag.DataExpertInitials = singleBurial.Dataexpertinitials;
+            ViewBag.WestToFeet = singleBurial.Westtofeet;
+            ViewBag.AgeAtDeath = singleBurial.Ageatdeath;
+            ViewBag.SouthToFeet = singleBurial.Southtofeet;
+            ViewBag.ExcavationRecorder = singleBurial.Excavationrecorder;
+            ViewBag.Photos = singleBurial.Photos;
+            ViewBag.Hair = singleBurial.Hair;
+            ViewBag.BurialMaterials = singleBurial.Burialmaterials;
+            ViewBag.DateOfExcavation = singleBurial.Dateofexcavation;
+            ViewBag.FieldBookExcavationYear = singleBurial.Fieldbookexcavationyear;
+            ViewBag.ClusterNumber = singleBurial.Clusternumber;
+            ViewBag.ShaftNumber = singleBurial.Shaftnumber;
+           
+
+            //viewbags for textile
+            
+
             ViewBag.Message = "Hello, world!";
             return View();
         }
