@@ -33,6 +33,7 @@ namespace IntexMummy.Infrastructure
         public string PageClassSelected { get; set; }
         public override void Process(TagHelperContext thc, TagHelperOutput tho)
         {
+            
             IUrlHelper uh = uhf.GetUrlHelper(vc);
 
             TagBuilder final = new TagBuilder("div");
@@ -58,19 +59,25 @@ namespace IntexMummy.Infrastructure
             }
             if (PageBlah.CurrentPage > 1)
             {
+                
+                
                 TagBuilder next = new TagBuilder("a");
                 next.Attributes["href"] = uh.Action(PageAction, new { pageNum = PageBlah.CurrentPage - 1 });
                 next.InnerHtml.Append("<   ");
 
                 final.InnerHtml.AppendHtml(next);
             }
-
+            
             for (int i = startPage; i <= endPage; i++)
             {
-                
-                TagBuilder tb = new TagBuilder("a");
-                tb.Attributes["href"] = uh.Action(PageAction, new { pageNum = i });
+                string gender = PageBlah.GenderSearchString;
+                long id = PageBlah.idSearchString;
+                string preservation = PageBlah.PreservationSearchString;
+                string headdirection = PageBlah.HeadDirectionSearchString;
 
+                TagBuilder tb = new TagBuilder("a");
+                tb.Attributes["href"] = uh.Action(PageAction, new {idSearchString = id, GenderSearchString = gender, PreservationSearchString = preservation, HeadDirectionSearchString = headdirection, pageNum = i }); 
+                
                 if (PageClassesEnabled)
                 {
                     tb.AddCssClass(PageClass);
@@ -82,6 +89,8 @@ namespace IntexMummy.Infrastructure
 
                 final.InnerHtml.AppendHtml(tb);
             }
+            
+            
 
             if (PageBlah.CurrentPage < PageBlah.TotalPages)
             {
