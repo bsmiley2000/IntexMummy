@@ -15,6 +15,7 @@ namespace IntexMummy.Models.ViewModels
         public string GenderSearchString { get; set; }
         public string PreservationSearchString { get; set; }
         public string HeadDirectionSearchString { get; set; }
+        public string AgeSearchString { get; set; }
         public int TotalPages => (int)Math.Ceiling((double)TotalNumBurials / BurialsPerPage);
         
     }

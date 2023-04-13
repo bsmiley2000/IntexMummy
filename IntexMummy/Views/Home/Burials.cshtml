@@ -3,11 +3,21 @@
 @{
     ViewData["Title"] = "View";
 }
-
+<style>
+    .pagination-arrow {
+        display: inline-block;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #ddd;
+        color: #333;
+        font-weight: bold;
+        text-decoration: none;
+    }
+</style>
 <form method="get" action="@Url.Action("Burials")">
     <div class="form-group row">
         <div class="col-md-2">
-            <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" maxlength="20" pattern="\d+" title="Please enter only numbers"/>
+            <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" maxlength="20" pattern="\d+" title="Please enter only numbers" />
         </div>
         <div class="col-md-2">
             <input type="text" name="GenderSearchString" placeholder="Gender (M/F)" class="form-control" value="@ViewData["GenderFilter"]" maxlength="1" pattern="[a-zA-Z]+" title="Please enter M or F" />
@@ -16,9 +26,14 @@
             <input type="text" name="PreservationSearchString" placeholder="Preservation" class="form-control" value="@ViewData["PreservationFilter"]" maxlength="15" pattern="[a-zA-Z]+" title="Please enter only letters" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="HeadDirectionSearchString" placeholder="Head Direction" class="form-control" value="@ViewData["HDFilter"]"  maxlength="3" pattern="[a-zA-Z]+" title="Please enter E or W" />
+            <input type="text" name="HeadDirectionSearchString" placeholder="Head Direction" class="form-control" value="@ViewData["HDFilter"]" maxlength="3" pattern="[a-zA-Z]+" title="Please enter E or W" />
         </div>
-
+        <div class="col-md-2">
+            <input type="text" name="AgeSearchString" placeholder="Age at Death" class="form-control" value="@ViewData["AgeFilter"]" maxlength="2" pattern="[a-zA-Z]+" title="Please enter only letters" />
+        </div>
+        @*<div class="col-md-2">
+            <input type="text" name="ColorSearchString" placeholder="Color" class="form-control" value="@ViewData["ColorFilter"]" maxlength="10" pattern="[a-zA-Z]+" title="Please enter only letters" />
+        </div>*@
         <div class="col-md-1">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
