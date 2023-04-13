@@ -18,11 +18,13 @@ using IntexMummy.Models;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace IntexMummy
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -43,7 +45,7 @@ namespace IntexMummy
             //line below is for Supervised Learning Model
             //added this below
             services.AddSingleton<InferenceSession>(
-              new InferenceSession("MLModel/model.onnx")
+                new InferenceSession(Path.Combine( "MLModel/model.onnx"))
             );
 
 
