@@ -20,8 +20,12 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace IntexMummy
 {
+
+
     public class Startup
     {
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,19 +37,6 @@ namespace IntexMummy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-/*
-            //for better passwords
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Default Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 13;
-                options.Password.RequiredUniqueChars = 5;
-            });
-*/
 
             /*services.AddDbContext<fagelgamousContext>(options =>
 
@@ -67,8 +58,11 @@ namespace IntexMummy
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
-            
+
+
+
+            services.AddControllersWithViews();
+
 
 /*            services.Configure<CookiePolicyOptions>(options =>
             {
@@ -79,7 +73,6 @@ namespace IntexMummy
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });*/
 
-            services.AddControllersWithViews();
             services.AddRazorPages();
 
         }
