@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="MLModel\model.onnx" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.31" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.32" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.32" />
@@ -37,6 +33,7 @@
     <None Include=".ebextensions\02_grant_executable_rights.config" />
     <None Include=".ebextensions\03_renew_ssl_certificate_cron_job.config" />
     <None Include=".platform\hooks\postdeploy\00_get_certificate.sh" />
+    <None Include="wwwroot\model.onnx" />
   </ItemGroup>
 
 </Project>

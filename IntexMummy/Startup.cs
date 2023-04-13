@@ -47,7 +47,7 @@ namespace IntexMummy
             //added this below
             services.AddSingleton<InferenceSession>(
                 new InferenceSession(
-                    Path.Combine(_env.ContentRootPath, "MLModel", "model.onnx")
+                    Path.Combine(_env.ContentRootPath, "wwwroot", "model.onnx")
                 )
             );
 
