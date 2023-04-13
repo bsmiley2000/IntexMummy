@@ -16,6 +16,7 @@ using System.Security;
 using System.Threading.Tasks;
 using IntexMummy.Models;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.ML.OnnxRuntime;
 
 
 namespace IntexMummy
@@ -33,19 +34,19 @@ namespace IntexMummy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-/*
-            //for better passwords
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Default Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 13;
-                options.Password.RequiredUniqueChars = 5;
-            });
-*/
+            /*
+                        //for better passwords
+                        services.Configure<IdentityOptions>(options =>
+                        {
+                            // Default Password settings.
+                            options.Password.RequireDigit = true;
+                            options.Password.RequireLowercase = false;
+                            options.Password.RequireNonAlphanumeric = true;
+                            options.Password.RequireUppercase = false;
+                            options.Password.RequiredLength = 13;
+                            options.Password.RequiredUniqueChars = 5;
+                        });
+            */
 
             /*services.AddDbContext<fagelgamousContext>(options =>
 
@@ -54,7 +55,15 @@ namespace IntexMummy
 
                             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));*/
 
-                        
+
+            //line below is for Supervised Learning Model experimentation
+            services.AddSwaggerGen();
+            //line below is for Supervised Learning Model
+            //added this below
+            services.AddSingleton<InferenceSession>(
+              new InferenceSession("MLModel/model.onnx")
+            );
+
 
             //connection for data and auth
             var conectionString = Configuration["ConnectionStrings:DefaultConnection"];
@@ -91,6 +100,8 @@ namespace IntexMummy
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
             else
             {
