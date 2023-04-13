@@ -7,16 +7,16 @@
 <form method="get" action="@Url.Action("Burials")">
     <div class="form-group row">
         <div class="col-md-2">
-            <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" />
+            <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" maxlength="20" pattern="\d+" title="Please enter only numbers"/>
         </div>
         <div class="col-md-2">
-            <input type="text" name="GenderSearchString" placeholder="Gender (M/F)" class="form-control" value="@ViewData["GenderFilter"]" />
+            <input type="text" name="GenderSearchString" placeholder="Gender (M/F)" class="form-control" value="@ViewData["GenderFilter"]" maxlength="1" pattern="[a-zA-Z]+" title="Please enter M or F" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="PreservationSearchString" placeholder="Preservation" class="form-control" value="@ViewData["PreservationFilter"]" />
+            <input type="text" name="PreservationSearchString" placeholder="Preservation" class="form-control" value="@ViewData["PreservationFilter"]" maxlength="15" pattern="[a-zA-Z]+" title="Please enter only letters" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="HeadDirectionSearchString" placeholder="Head Direction" class="form-control" value="@ViewData["HDFilter"]" />
+            <input type="text" name="HeadDirectionSearchString" placeholder="Head Direction" class="form-control" value="@ViewData["HDFilter"]"  maxlength="3" pattern="[a-zA-Z]+" title="Please enter E or W" />
         </div>
 
         <div class="col-md-1">
@@ -72,4 +72,7 @@
     <div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
          page-class="btn" page-class-normal="btn-outline-dark"
          page-class-selected="btn-primary" class="btn-group pull-right m-1">
+    </div>
+    <div>
+        <p>Total Records: @Model.PageInfo.TotalNumBurials</p>
     </div>
