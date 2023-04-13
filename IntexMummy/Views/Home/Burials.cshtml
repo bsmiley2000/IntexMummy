@@ -3,61 +3,73 @@
 @{
     ViewData["Title"] = "View";
 }
-<style>
-    .card:hover {
-        background-color: pink;
-    }
-</style>
-<h1>Burials</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<form method="get" action="@Url.Action("Index")">
+<form method="get" action="@Url.Action("Burials")">
     <div class="form-group row">
         <div class="col-md-2">
             <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="sexSearchString" placeholder="Search by sex" class="form-control" value="@ViewData["sexFilter"]" />
+            <input type="text" name="GenderSearchString" placeholder="Gender (M/F)" class="form-control" value="@ViewData["GenderFilter"]" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="depthSearchString" placeholder="Search by depth" class="form-control" value="@ViewData["depthFilter"]" />
+            <input type="text" name="PreservationSearchString" placeholder="Preservation" class="form-control" value="@ViewData["PreservationFilter"]" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="headDirectionSearchString" placeholder="Search by head direction" class="form-control" value="@ViewData["headDirectionFilter"]" />
+            <input type="text" name="HeadDirectionSearchString" placeholder="Head Direction" class="form-control" value="@ViewData["HDFilter"]" />
         </div>
-        <div class="col-md-2">
-            <select name="hasTextilesSearchString" class="form-control">
-                <option value="">--Has Textiles?--</option>
-                <option value="True" >Yes</option>
-                <option value="False">No</option>
-            </select>
-        </div>
-        <div class="col-md-2">
+
+        <div class="col-md-1">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
-    </div>
-</form>
 
-@foreach (Burialmain b in Model.Burialmain)
-{
+    </div>
+
+</form>
+<br />
+
+    <div class="row">
+        <div class="col">
+            <h4>Id</h4>
+        </div>
+        <div class="col">
+            <h4>Sex</h4>
+        </div>
+        <div class="col">
+            <h4>Preservation</h4>
+        </div>
+        <div class="col">
+            <h4>Head Direction</h4>
+        </div>
+        <div class="col">
+            <h4>Age at Death</h4>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    @foreach (Burialmain b in Model.Burialmain)
+    {
+<div class="mx-auto">
     <div class="card">
         <div class="row">
-            <div class="col">Id: @b.Id</div>
-            <div class="col">Sex: @b.Sex</div>
-            <div class="col">Depth: @b.Depth</div>
-            <div class="col">Head Direction: @b.Headdirection</div>
-            <div class="col">Has Textiles?: </div>
+            <div class="col">@b.Id</div>
+            <div class="col">@b.Sex</div>
+            <div class="col">@b.Preservation</div>
+            <div class="col">@b.Headdirection</div>
+            <div class="col">@b.Ageatdeath</div>
             <div class="col">
-                <button type="button" class="btn btn-primary" page-action="SingleBurial" page-id="@b.Id">View More</button>
+                <form method="get" action="@Url.Action("SingleBurial")">
+                    <input type="hidden" name="id" value="@b.Id" />
+                    <button type="submit" class="btn btn-primary">View Details</button>
+                </form>
             </div>
-
         </div>
     </div>
-}
-<div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-outline-dark"
-     page-class-selected="btn-primary" class="btn-group pull-right m-1">
-    Hello
 </div>
+
+    }
+    <br />
+    <div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
+         page-class="btn" page-class-normal="btn-outline-dark"
+         page-class-selected="btn-primary" class="btn-group pull-right m-1">
+    </div>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using IntexMummy.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 namespace IntexMummy.Infrastructure
 {
     [HtmlTargetElement("div", Attributes = "page-blah")]
@@ -66,6 +67,7 @@ namespace IntexMummy.Infrastructure
 
             for (int i = startPage; i <= endPage; i++)
             {
+                
                 TagBuilder tb = new TagBuilder("a");
                 tb.Attributes["href"] = uh.Action(PageAction, new { pageNum = i });
 

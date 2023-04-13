@@ -1,19 +1,165 @@
 ﻿@{
-    Layout = null;
+  
 }
-@ViewBag
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>SingleBurialPopup</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div>
-        <h2>ID: @ViewBag.Id</h2>
-        <p>@ViewBag.Message</p>
-        <!-- Add other elements to the popup view as needed -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tab1">BurialMain</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab2">Textiles</a>
+        </li>
+        @*<li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tab3">Tab 3</a>
+        </li>*@
+    </ul>
+    <div class="tab-content">
+        <div id="tab1" class="tab-pane fade show active">
+            <div class="grid-container">
+                
+                <div class="grid-item-label">ID:</div>
+                <div class="grid-item">@ViewBag.Id</div>
+                <div class="grid-item-label">Square North/South:</div>
+                <div class="grid-item">@ViewBag.SquareNorthSouth</div>
+                <div class="grid-item-label">Head Direction:</div>
+                <div class="grid-item">@ViewBag.HeadDirection</div>
+                <div class="grid-item-label">Sex:</div>
+                <div class="grid-item">@ViewBag.Sex</div>
+                <div class="grid-item-label">North/South:</div>
+                <div class="grid-item">@ViewBag.NorthSouth</div>
+                <div class="grid-item-label">Depth:</div>
+                <div class="grid-item">@ViewBag.Depth</div>
+                <div class="grid-item-label">East/West:</div>
+                <div class="grid-item">@ViewBag.EastWest</div>
+                <div class="grid-item-label">Adult/Subadult:</div>
+                <div class="grid-item">@ViewBag.AdultSubAdult</div>
+                <div class="grid-item-label">Face Bundles:</div>
+                <div class="grid-item">@ViewBag.FaceBundles</div>
+                <div class="grid-item-label">South to Head:</div>
+                <div class="grid-item">@ViewBag.SouthToHead</div>
+                <div class="grid-item-label">Preservation:</div>
+                <div class="grid-item">@ViewBag.Preservation</div>
+                <div class="grid-item-label">Field Book Page:</div>
+                <div class="grid-item">@ViewBag.FieldBookPage</div>
+                <div class="grid-item-label">Square East/West:</div>
+                <div class="grid-item">@ViewBag.SquareEastWest</div>
+                <div class="grid-item-label">Goods:</div>
+                <div class="grid-item">@ViewBag.Goods</div>
+                <div class="grid-item-label">Text:</div>
+                <div class="grid-item">@ViewBag.Text</div>
+                <div class="grid-item-label">Wrapping:</div>
+                <div class="grid-item">@ViewBag.Wrapping</div>
+                <div class="grid-item-label">Hair Color:</div>
+                <div class="grid-item">@ViewBag.HairColor</div>
+                <div class="grid-item-label">West to Head:</div>
+                <div class="grid-item">@ViewBag.WestToHead</div>
+                <div class="grid-item-label">Samples Collected:</div>
+                <div class="grid-item">@ViewBag.SamplesCollected</div>
+                <div class="grid-item-label">Area:</div>
+                <div class="grid-item">@ViewBag.Area</div>
+                <div class="grid-item-label">Burial ID:</div>
+                <div class="grid-item">@ViewBag.BurialId</div>
+                <div class="grid-item-label">Length:</div>
+                <div class="grid-item">@ViewBag.Length</div>
+                <div class="grid-item-label">Burial Number:</div>
+                <div class="grid-item">@ViewBag.BurialNumber</div>
+                <div class="grid-item-label">Data Expert Initials:</div>
+                <div class="grid-item">@ViewBag.DataExpertInitials</div>
+                <div class="grid-item-label">West to Feet:</div>
+                <div class="grid-item">@ViewBag.WestToFeet</div>
+                <div class="grid-item-label">Age at Death:</div>
+                <div class="grid-item">@ViewBag.AgeAtDeath</div>
+                <div class="grid-item-label">South to Feet:</div>
+                <div class="grid-item">@ViewBag.SouthToFeet</div>
+                <div class="grid-item-label">Excavation Recorder:</div>
+                <div class="grid-item">@ViewBag.ExcavationRecorder</div>
+                <div class="grid-item-label">Photos:</div>
+                <div class="grid-item">@ViewBag.Photos</div>
+                <div class="grid-item-label">Hair:</div>
+                <div class="grid-item">@ViewBag.Hair</div>
+                <div class="grid-item-label">Burial Materials:</div>
+                <div class="grid-item">@ViewBag.BurialMaterials</div>
+                <div class="grid-item-label">Date of Excavation:</div>
+                <div class="grid-item">@ViewBag.DateOfExcavation</div>
+                <div class="grid-item-label">Field Book Excavation Year:</div>
+                <div class="grid-item">@ViewBag.FieldBookExcavationYear</div>
+                <div class="grid-item-label">Cluster Number:</div>
+                <div class="grid-item">@ViewBag.ClusterNumber</div>
+                <div class="grid-item-label">Shaft Number:</div>
+                <div class="grid-item">@ViewBag.ShaftNumber</div>
+                <div class="grid-item-label">West to Feet:</div>
+                <div class="grid-item">@ViewBag.WestToFeet</div>
+
+            </div>
+        </div>
+        <div id="tab2" class="tab-pane fade">
+            @if (ViewBag.HasTextiles == true)
+            {
+            <div class="grid-container">
+                <div class="grid-item-label">ID:</div>
+                <div class="grid-item">@ViewBag.TId</div>
+                <div class="grid-item-label">Textile ID:</div>
+                <div class="grid-item">@ViewBag.TextileId</div>
+
+                <div class="grid-item-label">Locale:</div>
+                <div class="grid-item">@ViewBag.Locale</div>
+
+                <div class="grid-item-label">Description:</div>
+                <div class="grid-item">@ViewBag.Description</div>
+
+                <div class="grid-item-label">Burial Number:</div>
+                <div class="grid-item">@ViewBag.BurialNumber</div>
+
+                <div class="grid-item-label">Estimated Period:</div>
+                <div class="grid-item">@ViewBag.EstimatedPeriod</div>
+
+                <div class="grid-item-label">Sample Date:</div>
+                <div class="grid-item">@ViewBag.SampleDate</div>
+
+                <div class="grid-item-label">Photographed Date:</div>
+                <div class="grid-item">@ViewBag.PhotographedDate</div>
+                @if (ViewBag.HasColor == true)
+                {
+                    <div class="grid-item-label">Color:</div>
+                    <div class="grid-item">@ViewBag.Color</div>}
+
+                @if (ViewBag.HasColor == false)
+                {
+                    <div class="grid-item-label">Color:</div>
+                    <div class="grid-item">There is no color attribute added.</div>}
+                }
+            </div>
+            }
+            @if (ViewBag.HasTextiles == false)
+            {
+                <h3>There are no Textiles associated with this entry in Burialmain!</h3>
+            }
+
+        </div>
+        <div id="tab3" class="tab-pane fade">
+            <h3>Content for Tab 3</h3>
+            <p>This is the content for Tab 3.</p>
+        </div>
     </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".nav-tabs a").click(function () {
+                $(this).tab('show');
+            });
+        });
+    </script>
 </body>
 </html>
 
