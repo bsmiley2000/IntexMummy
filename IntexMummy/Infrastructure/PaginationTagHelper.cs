@@ -96,7 +96,7 @@ namespace IntexMummy.Infrastructure
             {
                 TagBuilder next = new TagBuilder("a");
                 next.Attributes["href"] = uh.Action(PageAction, new { pageNum = PageBlah.CurrentPage + 1 });
-                next.InnerHtml.Append("   >");
+                next.InnerHtml.Append(">");
 
                 final.InnerHtml.AppendHtml(next);
             }

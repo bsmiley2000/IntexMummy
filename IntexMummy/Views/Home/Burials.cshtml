@@ -28,48 +28,39 @@
 </form>
 <br />
 
-    <div class="row">
-        <div class="col">
-            <h4>Id</h4>
-        </div>
-        <div class="col">
-            <h4>Sex</h4>
-        </div>
-        <div class="col">
-            <h4>Preservation</h4>
-        </div>
-        <div class="col">
-            <h4>Head Direction</h4>
-        </div>
-        <div class="col">
-            <h4>Age at Death</h4>
-        </div>
-        <div class="col"></div>
-    </div>
+<table class="table table-bordered table-hover table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Sex</th>
+            <th scope="col">Preservation</th>
+            <th scope="col">Head Direction</th>
+            <th scope="col">Age at Death</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Burialmain b in Model.Burialmain)
+        {
+            <tr>
+                <th scope="row">@b.Id</th>
+                <td>@b.Sex</td>
+                <td>@b.Preservation</td>
+                <td>@b.Headdirection</td>
+                <td>@b.Ageatdeath</td>
+                <td>
+                    <form method="get" action="@Url.Action("SingleBurial")">
+                        <input type="hidden" name="id" value="@b.Id" />
+                        <button type="submit" class="btn btn-outline-secondary">View Details</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-    @foreach (Burialmain b in Model.Burialmain)
-    {
-<div class="mx-auto">
-    <div class="card">
-        <div class="row">
-            <div class="col">@b.Id</div>
-            <div class="col">@b.Sex</div>
-            <div class="col">@b.Preservation</div>
-            <div class="col">@b.Headdirection</div>
-            <div class="col">@b.Ageatdeath</div>
-            <div class="col">
-                <form method="get" action="@Url.Action("SingleBurial")">
-                    <input type="hidden" name="id" value="@b.Id" />
-                    <button type="submit" class="btn btn-primary">View Details</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<br />
+<div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
 </div>
-
-    }
-    <br />
-    <div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
-         page-class="btn" page-class-normal="btn-outline-dark"
-         page-class-selected="btn-primary" class="btn-group pull-right m-1">
-    </div>
