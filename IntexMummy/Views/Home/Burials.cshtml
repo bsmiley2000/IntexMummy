@@ -4,16 +4,20 @@
     ViewData["Title"] = "View";
 }
 <style>
-    .pagination-arrow {
+    .form-group form {
         display: inline-block;
-        padding: 5px;
-        border-radius: 5px;
-        background-color: #ddd;
-        color: #333;
-        font-weight: bold;
-        text-decoration: none;
+        margin-right: 10px; /* optional margin between forms */
     }
 </style>
+<br />
+@if (User.Identity.IsAuthenticated)
+{
+<form asp-controller="Home" asp-action="SingleBurialCreate" method="get">
+    <button type="submit" class="btn btn-primary">Create Burial Record</button>
+</form>
+<br />
+}
+
 <form method="get" action="@Url.Action("Burials")">
     <div class="form-group row">
         <div class="col-md-2">
@@ -32,8 +36,8 @@
             <input type="text" name="AgeSearchString" placeholder="Age at Death" class="form-control" value="@ViewData["AgeFilter"]" maxlength="2" pattern="[a-zA-Z]+" title="Please enter only letters" />
         </div>
         @*<div class="col-md-2">
-            <input type="text" name="ColorSearchString" placeholder="Color" class="form-control" value="@ViewData["ColorFilter"]" maxlength="10" pattern="[a-zA-Z]+" title="Please enter only letters" />
-        </div>*@
+                <input type="text" name="ColorSearchString" placeholder="Color" class="form-control" value="@ViewData["ColorFilter"]" maxlength="10" pattern="[a-zA-Z]+" title="Please enter only letters" />
+            </div>*@
         <div class="col-md-1">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
@@ -52,6 +56,7 @@
             <th scope="col">Head Direction</th>
             <th scope="col">Age at Death</th>
             <th scope="col"></th>
+
         </tr>
     </thead>
     <tbody>
@@ -64,11 +69,28 @@
                 <td>@b.Headdirection</td>
                 <td>@b.Ageatdeath</td>
                 <td>
-                    <form method="get" action="@Url.Action("SingleBurial")">
-                        <input type="hidden" name="id" value="@b.Id" />
-                        <button type="submit" class="btn btn-outline-secondary">View Details</button>
-                    </form>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <form method="get" action="@Url.Action("SingleBurial")">
+                            <input type="hidden" name="id" value="@b.Id" />
+                            <button type="submit" class="btn btn-outline-secondary">View Details</button>
+                        </form>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="form-group">
+                            <form class="d-inline" method="get" action="@Url.Action("SingleBurialEdit")">
+                                <input type="hidden" name="id" value="@b.Id" />
+                                <button type="submit" class="btn btn-outline-primary">Edit</button>
+                            </form>
+                            <form class="d-inline" method="get" action="@Url.Action("SingleBurialDelete")">
+                                <input type="hidden" name="id" value="@b.Id" />
+                                <button type="submit" class="btn btn-outline-primary">Delete</button>
+                            </form>
+                        </div>
+                    }
                 </td>
+
             </tr>
         }
     </tbody>
@@ -80,5 +102,5 @@
      page-class-selected="btn-primary" class="btn-group pull-right m-1">
 </div>
 <div>
-        <p>Total Records: @Model.PageInfo.TotalNumBurials</p>
+    <p>Total Records: @Model.PageInfo.TotalNumBurials</p>
 </div>

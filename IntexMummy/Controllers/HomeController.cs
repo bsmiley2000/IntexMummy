@@ -181,7 +181,53 @@ namespace IntexMummy.Controllers
             return View();
         }
 
+        [HttpGet]
+        //This will allow them to edit their response by taking them to the same html page we already made
+        public IActionResult SingleBurialEdit(long id = 0) //
+        { 
+            Burialmain singleBurial = context.Burialmain.Where(x => x.Id == id).First();
+            return View(singleBurial);
+        }
+        [HttpPost]
+        public IActionResult SingleBurialEdit(Burialmain bm)
+        {
 
+            context.Update(bm);
+           
+            context.SaveChanges();
+
+            return RedirectToAction("burials");
+
+        }
+        //deleting burial main
+
+        [HttpGet]
+        public IActionResult SingleBurialDelete(long id)
+        {
+            var burialMainInfo = context.Burialmain.Single(x => x.Id == id);
+            return View(burialMainInfo);
+        }
+
+        [HttpPost]
+        public IActionResult SingleBurialDelete(Burialmain bm)
+        {
+            context.Burialmain.Remove(bm);
+            context.SaveChanges();
+            return RedirectToAction("Burials");
+        }
+        [HttpGet]
+        public IActionResult SingleBurialCreate()
+        {
+            Burialmain bm = new Burialmain();
+            return View(bm);
+        }
+        [HttpPost]
+        public IActionResult SingleBurialCreate(Burialmain bm)
+        {
+            context.Burialmain.Add(bm);
+            context.SaveChanges();
+            return RedirectToAction("Burials");
+        }
 
         [Authorize]
         public IActionResult AdminData()
@@ -198,6 +244,7 @@ namespace IntexMummy.Controllers
         {
             return View();
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
