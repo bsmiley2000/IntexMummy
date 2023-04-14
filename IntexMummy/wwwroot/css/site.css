@@ -65,10 +65,11 @@ body {
 }
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     justify-items: center;
     align-items: center;
+    margin-top: 40px;
 }
 
 .grid-item {
