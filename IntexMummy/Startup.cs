@@ -104,6 +104,7 @@ namespace IntexMummy
                 context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net; font-src 'self'; img-src 'self' https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F7d3dfd74-27d4-11e9-92e2-27eb1cf1c11f.jpg?crop=4675%2C2630%2C33%2C485&resize=1180; frame-src 'self'");
                 await next();
             });
+            
 
 
             app.UseEndpoints(endpoints =>
