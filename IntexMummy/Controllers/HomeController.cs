@@ -8,6 +8,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using IntexMummy.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
+using IntexMummy.MLModel;
+using Microsoft.AspNetCore.Http;
 
 namespace IntexMummy.Controllers
 {
@@ -32,16 +36,20 @@ namespace IntexMummy.Controllers
             return View();
         }
 
-        public IActionResult Burials(int pageNum = 1, long idSearchString = 5, string GenderSearchString = null, string PreservationSearchString = null, string HeadDirectionSearchString = null)
+        public IActionResult Burials(int pageNum = 1, long idSearchString = 0, string GenderSearchString = null, string PreservationSearchString = null, string HeadDirectionSearchString = null, string AgeSearchString = null, string ColorSearchString = null)
         {
+            
+
             int pageSize = 10;
             long id = idSearchString;
             string gender = GenderSearchString;
             string preservation = PreservationSearchString;
             string headdirection = HeadDirectionSearchString;
-            
+            string age = AgeSearchString;
+            string color = ColorSearchString;
+   
             var burialsQuery = context.Burialmain.AsQueryable();
-            if (id != 5)
+            if (id != 0)
             {
                 burialsQuery = burialsQuery.Where(p => p.Id == id);
                 
@@ -53,13 +61,21 @@ namespace IntexMummy.Controllers
             }
             if (preservation != null)
             {
-                burialsQuery = burialsQuery.Where(p => p.Preservation == preservation);
+                burialsQuery = burialsQuery.Where(p => p.Preservation.Contains(preservation));
                 
             }
             if (headdirection != null)
             {
                 burialsQuery = burialsQuery.Where(p => p.Headdirection == headdirection);
                 
+            }
+            if (age != null)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Ageatdeath == age);
+            }
+            if (color != null)
+            {
+                burialsQuery = burialsQuery.Where(p => p.Headdirection == "YOURMOM!!");
             }
 
             var burials = burialsQuery.Skip((pageNum - 1) * pageSize).Take(pageSize);
@@ -68,11 +84,13 @@ namespace IntexMummy.Controllers
             {
                 TotalNumBurials = burialsQuery.Count(),
                 BurialsPerPage = pageSize,
-                CurrentPage = pageNum
-               
-               
-
-
+                CurrentPage = pageNum,
+                GenderSearchString = gender,
+                idSearchString = id,
+                HeadDirectionSearchString = headdirection,
+                PreservationSearchString = preservation,
+                AgeSearchString = age
+                
 
             };
             
@@ -163,7 +181,53 @@ namespace IntexMummy.Controllers
             return View();
         }
 
+        [HttpGet]
+        //This will allow them to edit their response by taking them to the same html page we already made
+        public IActionResult SingleBurialEdit(long id = 0) //
+        { 
+            Burialmain singleBurial = context.Burialmain.Where(x => x.Id == id).First();
+            return View(singleBurial);
+        }
+        [HttpPost]
+        public IActionResult SingleBurialEdit(Burialmain bm)
+        {
 
+            context.Update(bm);
+           
+            context.SaveChanges();
+
+            return RedirectToAction("burials");
+
+        }
+        //deleting burial main
+
+        [HttpGet]
+        public IActionResult SingleBurialDelete(long id)
+        {
+            var burialMainInfo = context.Burialmain.Single(x => x.Id == id);
+            return View(burialMainInfo);
+        }
+
+        [HttpPost]
+        public IActionResult SingleBurialDelete(Burialmain bm)
+        {
+            context.Burialmain.Remove(bm);
+            context.SaveChanges();
+            return RedirectToAction("Burials");
+        }
+        [HttpGet]
+        public IActionResult SingleBurialCreate()
+        {
+            Burialmain bm = new Burialmain();
+            return View(bm);
+        }
+        [HttpPost]
+        public IActionResult SingleBurialCreate(Burialmain bm)
+        {
+            context.Burialmain.Add(bm);
+            context.SaveChanges();
+            return RedirectToAction("Burials");
+        }
 
         [Authorize]
         public IActionResult AdminData()
@@ -180,6 +244,7 @@ namespace IntexMummy.Controllers
         {
             return View();
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

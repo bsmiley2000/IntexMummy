@@ -19,9 +19,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.14.1" />
+    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.18" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +33,7 @@
     <None Include=".ebextensions\02_grant_executable_rights.config" />
     <None Include=".ebextensions\03_renew_ssl_certificate_cron_job.config" />
     <None Include=".platform\hooks\postdeploy\00_get_certificate.sh" />
+    <None Include="wwwroot\model.onnx" />
   </ItemGroup>
 
 </Project>

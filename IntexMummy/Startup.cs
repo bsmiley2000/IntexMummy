@@ -16,36 +16,40 @@ using System.Security;
 using System.Threading.Tasks;
 using IntexMummy.Models;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace IntexMummy
 {
-
-
     public class Startup
     {
+        private readonly IWebHostEnvironment _env;
 
-
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            _env = environment;
         }
 
         public IConfiguration Configuration { get; }
-
+        public IWebHostEnvironment Environment => _env;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            /*services.AddDbContext<fagelgamousContext>(options =>
-
-                            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-                        services.AddDbContext<ApplicationDbContext>(options =>
-
-                            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));*/
-
-                        
+            //line below is for Supervised Learning Model experimentation
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+            //line below is for Supervised Learning Model
+            //added this below
+            services.AddSingleton<InferenceSession>(
+                new InferenceSession(
+                    Path.Combine(_env.ContentRootPath, "wwwroot", "model.onnx")
+                )
+            );
 
             //connection for data and auth
             var conectionString = Configuration["ConnectionStrings:DefaultConnection"];
@@ -59,19 +63,7 @@ namespace IntexMummy
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
-
             services.AddControllersWithViews();
-
-
-/*            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential 
-                // cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                // requires using Microsoft.AspNetCore.Http;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });*/
 
             services.AddRazorPages();
 
@@ -84,6 +76,11 @@ namespace IntexMummy
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
             }
             else
             {
@@ -109,11 +106,13 @@ namespace IntexMummy
                 await next();
             });
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                
                 endpoints.MapRazorPages();
             });
         }

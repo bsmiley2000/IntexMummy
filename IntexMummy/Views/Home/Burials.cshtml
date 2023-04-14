@@ -3,22 +3,41 @@
 @{
     ViewData["Title"] = "View";
 }
+<style>
+    .form-group form {
+        display: inline-block;
+        margin-right: 10px; /* optional margin between forms */
+    }
+</style>
+<br />
+@if (User.Identity.IsAuthenticated)
+{
+<form asp-controller="Home" asp-action="SingleBurialCreate" method="get">
+    <button type="submit" class="btn btn-primary">Create Burial Record</button>
+</form>
+<br />
+}
 
 <form method="get" action="@Url.Action("Burials")">
     <div class="form-group row">
         <div class="col-md-2">
-            <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" />
+            <input type="text" name="idSearchString" placeholder="Search by ID" class="form-control" value="@ViewData["idFilter"]" maxlength="20" pattern="\d+" title="Please enter only numbers" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="GenderSearchString" placeholder="Gender (M/F)" class="form-control" value="@ViewData["GenderFilter"]" />
+            <input type="text" name="GenderSearchString" placeholder="Gender (M/F)" class="form-control" value="@ViewData["GenderFilter"]" maxlength="1" pattern="[a-zA-Z]+" title="Please enter M or F" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="PreservationSearchString" placeholder="Preservation" class="form-control" value="@ViewData["PreservationFilter"]" />
+            <input type="text" name="PreservationSearchString" placeholder="Preservation" class="form-control" value="@ViewData["PreservationFilter"]" maxlength="15" pattern="[a-zA-Z]+" title="Please enter only letters" />
         </div>
         <div class="col-md-2">
-            <input type="text" name="HeadDirectionSearchString" placeholder="Head Direction" class="form-control" value="@ViewData["HDFilter"]" />
+            <input type="text" name="HeadDirectionSearchString" placeholder="Head Direction" class="form-control" value="@ViewData["HDFilter"]" maxlength="3" pattern="[a-zA-Z]+" title="Please enter E or W" />
         </div>
-
+        <div class="col-md-2">
+            <input type="text" name="AgeSearchString" placeholder="Age at Death" class="form-control" value="@ViewData["AgeFilter"]" maxlength="2" pattern="[a-zA-Z]+" title="Please enter only letters" />
+        </div>
+        @*<div class="col-md-2">
+                <input type="text" name="ColorSearchString" placeholder="Color" class="form-control" value="@ViewData["ColorFilter"]" maxlength="10" pattern="[a-zA-Z]+" title="Please enter only letters" />
+            </div>*@
         <div class="col-md-1">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
@@ -28,48 +47,60 @@
 </form>
 <br />
 
-    <div class="row">
-        <div class="col">
-            <h4>Id</h4>
-        </div>
-        <div class="col">
-            <h4>Sex</h4>
-        </div>
-        <div class="col">
-            <h4>Preservation</h4>
-        </div>
-        <div class="col">
-            <h4>Head Direction</h4>
-        </div>
-        <div class="col">
-            <h4>Age at Death</h4>
-        </div>
-        <div class="col"></div>
-    </div>
+<table class="table table-bordered table-hover table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Sex</th>
+            <th scope="col">Preservation</th>
+            <th scope="col">Head Direction</th>
+            <th scope="col">Age at Death</th>
+            <th scope="col"></th>
 
-    @foreach (Burialmain b in Model.Burialmain)
-    {
-<div class="mx-auto">
-    <div class="card">
-        <div class="row">
-            <div class="col">@b.Id</div>
-            <div class="col">@b.Sex</div>
-            <div class="col">@b.Preservation</div>
-            <div class="col">@b.Headdirection</div>
-            <div class="col">@b.Ageatdeath</div>
-            <div class="col">
-                <form method="get" action="@Url.Action("SingleBurial")">
-                    <input type="hidden" name="id" value="@b.Id" />
-                    <button type="submit" class="btn btn-primary">View Details</button>
-                </form>
-            </div>
-        </div>
-    </div>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Burialmain b in Model.Burialmain)
+        {
+            <tr>
+                <th scope="row">@b.Id</th>
+                <td>@b.Sex</td>
+                <td>@b.Preservation</td>
+                <td>@b.Headdirection</td>
+                <td>@b.Ageatdeath</td>
+                <td>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <form method="get" action="@Url.Action("SingleBurial")">
+                            <input type="hidden" name="id" value="@b.Id" />
+                            <button type="submit" class="btn btn-outline-secondary">View Details</button>
+                        </form>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="form-group">
+                            <form class="d-inline" method="get" action="@Url.Action("SingleBurialEdit")">
+                                <input type="hidden" name="id" value="@b.Id" />
+                                <button type="submit" class="btn btn-outline-primary">Edit</button>
+                            </form>
+                            <form class="d-inline" method="get" action="@Url.Action("SingleBurialDelete")">
+                                <input type="hidden" name="id" value="@b.Id" />
+                                <button type="submit" class="btn btn-outline-primary">Delete</button>
+                            </form>
+                        </div>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1">
 </div>
-
-    }
-    <br />
-    <div page-blah="@Model.PageInfo" page-action="Burials" page-classes-enabled="true"
-         page-class="btn" page-class-normal="btn-outline-dark"
-         page-class-selected="btn-primary" class="btn-group pull-right m-1">
-    </div>
+<div>
+    <p>Total Records: @Model.PageInfo.TotalNumBurials</p>
+</div>

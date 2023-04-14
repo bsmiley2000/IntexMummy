@@ -1,17 +1,33 @@
 ﻿@{
-    ViewData["Title"] = "Unsupervised";
+    ViewData["Title"] = "Unsupervised Analysis";
 }
-<h1>@ViewData["Title"]</h1>
+<h1 class="mt-1 mb-5">@ViewData["Title"]</h1>
 
-<h3>Results of Our Unsupervised Analysis:</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<h5>Clustering analysis by burial location: </h5>
 
 <br />
 <br />
 
 <div fluid>
     <iframe src="/fig.html" width="1000" height="500"></iframe>
+</div>
+
+<div class="mt-5">
+    According to our model, there are two clusters of bodies that have been unveiled and recorded. The graph shows the location of each body.
+    The purple cluster represents bodies that were buried during one time period, and the yellow bodies represent bodies that were buried in another.
+    Burial practices in the "purple period" are drastically different from the burial practices during the "yellow period".
+</div>
+
+<div class="mt-3">
+    The purple period civilizations were very efficient with their space, packing as many bodies as possible on top of each other in just a few burial spots.
+</div>
+
+<div class="mt-3">
+    The yellow period also stacks bodies, but they do so in many different burial spots that span a much larger area.
+
+</div>
+
+<div class="mt-3 mb-5">
+    Our model suggests that if you would like to find more buried bodies for the purple civilizations, you should focus your efforts on digging in the very small area where purple bodies have been found before. If you hope to find bodies from the yellow period, you should start by looking near the outliers. The yellow civiliation often stacked bodies, so I would recommend digging on top of or very near to the single dots on our model. If you expand your search into uncharted areas, you are most likely to find bodies from the yellow civilization as they were much more likely to bury bodies in different places.
+
 </div>
