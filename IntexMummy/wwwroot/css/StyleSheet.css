@@ -139,3 +139,12 @@ hr {
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+
+
+.box {
+    border: 1px solid #ccc; /* Set border style */
+    padding: 20px; /* Set padding */
+    margin: 20px; /* Set margin */
+}
+
